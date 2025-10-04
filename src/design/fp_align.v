@@ -1,0 +1,52 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 10/04/2025 08:48:23 AM
+// Design Name: 
+// Module Name: fb_align
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module fp_align(
+        output reg [22:0] aligned_a, // new mantissa 
+        output reg [22:0] aligned_b, // new mantissa 
+        output reg [7:0] exp,
+
+        input wire [7:0] EXP_A,
+        input wire [7:0] EXP_B,
+        input wire [22:0] MANT_A,
+        input wire [22:0] MANT_B,
+        input wire IS_DENORMAL_A, // 0 = normal, 1 = denormal
+        input wire IS_DENORMAL_B // 0 = normal, 1 = denormal
+    );
+
+    reg [7:0] sub;
+    always @ (*) begin
+        if(EXP_A < EXP_B) begin 
+            sub = EXP_B - EXP_A;
+            aligned_a = MANT_A >> sub;
+            aligned_b = MANT_B;
+            exp =  EXP_B;
+        end
+        else begin 
+            sub = EXP_A - EXP_B;
+            aligned_b = MANT_B >> sub;
+            aligned_a = MANT_A;
+            exp = EXP_A;
+        end
+    end
+
+endmodule
