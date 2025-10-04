@@ -27,8 +27,6 @@ module fp_decode(
     output wire [7:0] exp_b,
     output wire [22:0] mant_a,
     output wire [22:0] mant_b,
-    output wire is_denormal_a,
-    output wire is_denormal_b,
 
     input [31:0] OP_A,
     input [31:0] OP_B,
@@ -67,9 +65,5 @@ module fp_decode(
     assign exp_b = MODE_FP ? exp_b_single : {3'b000, exp_b_half};
     assign mant_a = MODE_FP ? mant_a_single : {13'b0, mant_a_half};
     assign mant_b = MODE_FP ? mant_b_single : {13'b0, mant_b_half};
-    
-    assign is_denormal_a = (exp_a == 0) && (mant_a != 0);
-    assign is_denormal_b = (exp_b == 0) && (mant_b != 0);
-    
 
 endmodule
