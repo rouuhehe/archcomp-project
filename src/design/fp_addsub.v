@@ -30,8 +30,6 @@ module fp_addsub(
     input [22:0] MANT_B
     );
 
-    assign sign_res = SIGN_A ^ SIGN_B;  // 0 = pos, 1 = neg
-
     always @ (*) begin
         case(OP_CODE)
             3'b000: begin // addition
