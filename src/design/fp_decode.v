@@ -29,7 +29,6 @@ module fp_decode(
     output wire [22:0] mant_b,
     output wire is_denormal_a,
     output wire is_denormal_b,
-    output wire [4:0] flags,
 
     input [31:0] OP_A,
     input [31:0] OP_B,
@@ -72,6 +71,5 @@ module fp_decode(
     assign is_denormal_a = (exp_a == 0) && (mant_a != 0);
     assign is_denormal_b = (exp_b == 0) && (mant_b != 0);
     
-    assign flags = 4'b0000; // No flags implemented yet
 
 endmodule
