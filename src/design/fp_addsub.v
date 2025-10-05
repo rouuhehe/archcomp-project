@@ -1,9 +1,10 @@
 `timescale 1ns / 1ns
 
+// TODO REMOVE FLAGS
+
 module fp_addsub(
     output reg sign, // 0 = pos, 1 = neg
     output reg [24:0] mant,
-    output reg [4:0] flags,
 
     input SIGN_A,
     input SIGN_B,
@@ -11,7 +12,6 @@ module fp_addsub(
     input [2:0] OP_CODE, // 000 = add, 001 = sub
     input [22:0] MANT_A,
     input [22:0] MANT_B,
-    input [8:0] EXP
     );
 
     always @ (*) begin
@@ -51,15 +51,5 @@ module fp_addsub(
         endcase
     end
 
-    wire [8:0] max_exp  = (MODE_FP) ? 9'd254 : 9'd30; 
-    wire [8:0] min_exp  = 9'd1;  
-    always @(*) begin
-        flags = 5'b00000;
-        if (EXP == 8'b0 && mant == 0) flags = 5'b00000; // ZERO
-        else if (EXP < min_exp && mant != 0) flags = 5'b10000; // DENORMAL
-        else if (EXP == (max_exp + 1) && mant == 0) flags = 5'b11111; // INF
-        else if (EXP == (max_exp + 1) && mant != 0) flags = 5'b00001; // NaN
-        else if (EXP > max_exp + 1) flags = 5'b00010;  // OVERFLOW
-        else if (EXP < min_exp) flags = 5'b00011;  // UNDERFLOW
-    end
+    
 endmodule

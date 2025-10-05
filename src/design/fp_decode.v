@@ -1,4 +1,24 @@
 `timescale 1ns / 1ns
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 10/04/2025 08:13:34 AM
+// Design Name: 
+// Module Name: fp_decode
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
 
 module fp_decode(
     output wire sign_a,
@@ -23,7 +43,6 @@ module fp_decode(
 
     wire [9:0] mant_a_half = OP_A[9:0];
     wire [9:0] mant_b_half = OP_B[9:0];
-
     
     // single (32 bits): 1 sign, 8 exponent, 23 mantissa
 

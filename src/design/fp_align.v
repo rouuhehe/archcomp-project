@@ -9,8 +9,6 @@ module fp_align(
         input wire [7:0] EXP_B,
         input wire [22:0] MANT_A,
         input wire [22:0] MANT_B,
-        input wire IS_DENORMAL_A, // 0 = normal, 1 = denormal
-        input wire IS_DENORMAL_B // 0 = normal, 1 = denormal
     );
 
     reg [7:0] sub;
