@@ -1,24 +1,4 @@
 `timescale 1ns / 1ns
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 10/04/2025 08:48:23 AM
-// Design Name: 
-// Module Name: fb_align
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module fp_align(
         output reg [22:0] aligned_a, // new mantissa 

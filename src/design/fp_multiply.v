@@ -1,24 +1,4 @@
 `timescale 1ns / 1ns
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 10/04/2025 04:03:41 PM
-// Design Name: 
-// Module Name: fp_mul
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module fp_multiply(
     output wire [48:0] mant,
@@ -48,7 +28,7 @@ module fp_multiply(
         else if (exp < min_exp && mant != 0) flags = 5'b10000; // DENORMAL
         else if (exp == (max_exp + 1) && mant == 0) flags = 5'b11111; // INF
         else if (exp == (max_exp + 1) && mant != 0) flags = 5'b00001; // NaN
-        else if (exp > max_exp + 1) flags = 5'b00010; // OVERFLOW
+        else if (exp > max_exp + 1) flags = 5'b11000; // OVERFLOW
         else if (exp < min_exp) flags = 5'b00011; // UNDERFLOW
     end
 endmodule
