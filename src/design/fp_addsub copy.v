@@ -1,7 +1,5 @@
 `timescale 1ns / 1ns
 
-// TODO REMOVE FLAGS
-
 module fp_addsub(
     output reg sign, // 0 = pos, 1 = neg
     output reg [24:0] mant,
@@ -11,7 +9,7 @@ module fp_addsub(
     input MODE_FP, // 0 = half, 1 = single
     input [2:0] OP_CODE, // 000 = add, 001 = sub
     input [22:0] MANT_A,
-    input [22:0] MANT_B,
+    input [22:0] MANT_B
     );
 
     always @ (*) begin

@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 
 module fp_normalize(
     output reg [48:0] mant, // normalized mantissa
@@ -15,24 +15,29 @@ module fp_normalize(
 
     reg [48:0] mant_tmp;
     reg [8:0] exp_tmp;
-
-    integer i;
+    integer stop, i;
     
     always @ (*) begin 
         mant_tmp = MANT;
         exp_tmp = EXP;
-
+        
+        
         if(mant_tmp[48] == 1'b1) begin
             mant_tmp = mant_tmp >> 1;
             exp_tmp = exp_tmp + 1;
         end
         else begin 
-            normalize_loop: for (i = 0; i < 49; i = i + 1) begin
+        
+            
+            stop = 0;
+                
+            for (i = 0; i < 49 && !stop; i = i + 1) begin
                 if (mant_tmp[47] == 1'b0 && exp_tmp > MIN_EXP) begin
                     mant_tmp = mant_tmp << 1;
                     exp_tmp = exp_tmp - 1;
-                end else begin
-                    disable normalize_loop;
+                end 
+                else begin
+                    stop = 1; // break
                 end
             end
         end
