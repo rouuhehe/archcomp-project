@@ -1,58 +1,64 @@
-module exception16_sum(
-    input [15:0] Q, 
-    output reg exc, 
-    input wire A, B
+module magnitude16_sub (
+    output reg [15:0] Q, // result
+    output reg exc, // exception flag
+
+    input wire SIGN_A,
+    input wire SIGN_B,
+    input wire [4:0] IN_EXP_B_HALF,
+    input wire [4:0] IN_EXP_A_HALF,
+    input wire [10:0] IN_MANT_A_HALF,
+    input wire [10:0] IN_MANT_B_HALF
     );
-  input [7:0] A, B;
-  output reg [7:0] Q;
-  output reg exc;
-  
-  wire sign_a = A[7];
-  wire sign_b = B[7];
-  wire [3:0] exp_a = A[6:3];
-  wire [3:0] exp_b = B[6:3];
-  wire [2:0] mts_a = A[2:0];
-  wire [2:0] mts_b = B[2:0];  
-  
-  always @(*) begin
-    exc = 1'b1;
-    // Both NaN
-    if ((exp_a == 4'b1111 && mts_a != 3'b000) && (exp_b == 4'b1111 && mts_b != 3'b000)) begin
-      Q[7] = sign_a;
-      Q[6:3] = 4'b1111;
-      Q[2:0] = (mts_a <= mts_b) ? mts_a : mts_b;
+
+    always @(*) begin
+        exc = 1'b1; 
+        Q = 16'b0;
+        // both NaN
+        if((IN_EXP_A_HALF == 5'b11111 && IN_MANT_A_HALF != 11'b00000000000) && 
+           (IN_EXP_B_HALF == 5'b11111 && IN_MANT_B_HALF != 11'b00000000000)) begin
+            Q[15] = SIGN_A;
+            Q[14:10] = 5'b11111;
+            Q[9:0] = (IN_MANT_A_HALF <= IN_MANT_B_HALF) ? IN_MANT_A_HALF : IN_MANT_B_HALF; 
+        end
+
+        // A is NaN
+        else if(IN_EXP_A_HALF == 5'b11111 && IN_MANT_A_HALF != 11'b00000000000) begin
+            Q[15] = SIGN_A;
+            Q[14:10] = IN_EXP_A_HALF;
+            Q[9:0] = IN_MANT_A_HALF;
+        end
+        
+        // B is NaN
+        else if(IN_EXP_B_HALF == 5'b11111 && IN_MANT_B_HALF != 11'b00000000000) begin
+            Q[15] = SIGN_B;
+            Q[14:10] = IN_EXP_B_HALF;
+            Q[9:0] = IN_MANT_B_HALF;
+        end
+        
+        // one is +-inf
+        else if((IN_EXP_A_HALF == 5'b11111 && IN_MANT_A_HALF == 11'b00000000000) || 
+                (IN_EXP_B_HALF == 5'b11111 && IN_MANT_B_HALF == 11'b00000000000)) begin
+            Q[15] = (IN_EXP_A_HALF == 5'b11111) ? SIGN_A : SIGN_B;
+            Q[14:10] = 5'b11111;
+            Q[9:0] = 11'b00000000000;
+        end
+        
+        // A is zero
+        else if(IN_EXP_A_HALF == 5'b00000 && IN_MANT_A_HALF == 11'b00000000000) begin
+            Q[15] = SIGN_B;
+            Q[14:10] = IN_EXP_B_HALF;
+            Q[9:0] = IN_MANT_B_HALF;
+        end
+        
+        // B is zero
+        else if(IN_EXP_B_HALF == 5'b00000 && IN_MANT_B_HALF == 11'b00000000000) begin
+            Q[15] = SIGN_A;
+            Q[14:10] = IN_EXP_A_HALF;
+            Q[9:0] = IN_MANT_A_HALF;
+        end
+        else
+            exc = 1'b0;
     end
-    // A is NaN
-    else if ((exp_a == 4'b1111 && mts_a != 3'b000)) begin
-      Q[7] = sign_a;
-      Q[6:3] = exp_a;
-      Q[2:0] = mts_a;
-    end
-    // B is NaN
-    else if ((exp_b == 4'b1111 && mts_b != 3'b000)) begin
-      Q[7] = sign_b;
-      Q[6:3] = exp_b;
-      Q[2:0] = mts_b;
-    end
-    // One is +-inf
-    else if ((exp_a == 4'b1111 && mts_a == 3'b000) || (exp_b == 4'b1111 && mts_b == 3'b000)) begin
-      Q[7] = (exp_a == 4'b1111) ? sign_a : sign_b;
-      Q[6:3] = 4'b1111;
-      Q[2:0] = 3'b000;
-    end
-    // A is zero
-    else if (exp_a == 4'b0000 && mts_a == 3'b000) begin
-      Q[7] = sign_b;
-      Q[6:3] = exp_b;
-      Q[2:0] = mts_b;
-    end
-    // B is zero
-    else if (exp_b == 4'b0000 && mts_b == 3'b000) begin
-      Q[7] = sign_a;
-      Q[6:3] = exp_a;
-      Q[2:0] = mts_a;
-    end
-    else
-      exc = 1'b0;
-  end
+    
+
 endmodule

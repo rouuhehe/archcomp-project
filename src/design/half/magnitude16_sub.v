@@ -1,6 +1,6 @@
 module magnitude16_sub (
-    output [4:0] FLAGS, // [4]=, [3]=, [2]=UF, [1]=OF, [0]=INEXACT
     output [15:0] Q, // result
+    output [4:0] FLAGS, // [4]=, [3]=, [2]=UF, [1]=OF, [0]=INEXACT
 
     input wire SIGN_A,
     input wire SIGN_B,
@@ -29,7 +29,7 @@ module magnitude16_sub (
         end
     end
 
-    
+
     // normalize
     // round
     // flags

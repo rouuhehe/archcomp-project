@@ -1,5 +1,4 @@
 module magnitude16_sub (
-    output [4:0] FLAGS, // [4]=, [3]=, [2]=UF, [1]=OF, [0]=INEXACT
     output reg [15:0] Q, // result
     output reg exc, // exception flag
 
