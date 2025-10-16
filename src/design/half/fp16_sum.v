@@ -38,5 +38,5 @@ module fp16_sum(
     );
   
   assign Q = exc ? Q_exc : Q_mag;
-  assign flags = exc ? 3'b000 : flags_mag;
+  assign flags = exc ? 5'b00000 : flags_mag;
 endmodule
