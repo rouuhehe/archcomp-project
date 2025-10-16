@@ -18,7 +18,7 @@ module fp16_normalize(
         // denormal
         else if (!OUT_MANT[10] && (OUT_EXP > 0)) begin
             OUT_MANT = OUT_MANT << 1;
-            OUT_EXP  = OUT_EXP - 1;
+            OUT_EXP  = 5'b00000;
         end
     end
 
