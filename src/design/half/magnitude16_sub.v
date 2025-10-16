@@ -31,7 +31,14 @@ module magnitude16_sub (
 
 
     // normalize
-    // round
+    fp16_normalize norm_mod(
+        .OUT_MANT(Q[9:0]),
+        .OUT_EXP(Q[14:10]),
+        .IN_MANT(mant),
+        .IN_EXP(IN_EXP_HALF)
+    );
+
+
     // flags
 
 

@@ -11,7 +11,7 @@ module exception16_sum (
     );
 
     always @(*) begin
-        exc = 1'b1; 
+        exc = 1'b1;
         Q = 16'b0;
         // both NaN
         if((IN_EXP_A_HALF == 5'b11111 && IN_MANT_A_HALF != 10'b0000000000) && 
