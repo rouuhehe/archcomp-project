@@ -1,4 +1,4 @@
-module magnitude16_sub (
+module magnitude16_sum (
     output reg [15:0] Q, // result
     output reg exc, // exception flag
 
