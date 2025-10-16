@@ -35,12 +35,26 @@ module exception16_sum (
             Q[9:0] = IN_MANT_B_HALF;
         end
         
-        // one is +-inf
-        else if((IN_EXP_A_HALF == 5'b11111 && IN_MANT_A_HALF == 10'b0000000000) || 
+        // both are +-inf
+        else if((IN_EXP_A_HALF == 5'b11111 && IN_MANT_A_HALF == 10'b0000000000) && 
                 (IN_EXP_B_HALF == 5'b11111 && IN_MANT_B_HALF == 10'b0000000000)) begin
-            Q[15] = (IN_EXP_A_HALF == 5'b11111) ? SIGN_A : SIGN_B;
+            Q[15] = (SIGN_A == SIGN_B) ? SIGN_A : 1'b0;
             Q[14:10] = 5'b11111;
-            Q[9:0] = 10'b0000000000;
+            Q[9:0] = 10'b1111111111;
+        end
+        
+        // A is +-inf
+        else if(IN_EXP_A_HALF == 5'b11111 && IN_MANT_A_HALF == 10'b0000000000) begin
+            Q[15] = SIGN_A;
+            Q[14:10] = IN_EXP_A_HALF;
+            Q[9:0] = IN_MANT_A_HALF
+        end
+        
+        // B is +-inf
+        else if(IN_EXP_B_HALF == 5'b11111 && IN_MANT_B_HALF == 10'b0000000000) begin
+            Q[15] = SIGN_B;
+            Q[14:10] = IN_EXP_B_HALF;
+            Q[9:0] = IN_MANT_B_HALF
         end
         
         // A is zero
