@@ -6,41 +6,51 @@ module magnitude16_sub (
     input wire SIGN_B,
     input wire [4:0] IN_EXP_HALF,
     input wire [10:0] IN_MANT_A_HALF,
-    input wire [10:0] IN_MANT_B_HALF,
+    input wire [10:0] IN_MANT_B_HALF
     );
     
-    reg [11:0] mant;
+    reg [12:0] mant;
     reg sign;
 
     always @(*) begin
         if(SIGN_A == SIGN_B) begin
             if(IN_MANT_A_HALF >= IN_MANT_B_HALF) begin
-                mant = {1'b0, IN_MANT_A_HALF} - {1'b0, IN_MANT_B_HALF};
+                mant = IN_MANT_A_HALF - IN_MANT_B_HALF;
                 sign = SIGN_A;
             end
             else begin
-                mant = {1'b0, IN_MANT_B_HALF} - {1'b0, IN_MANT_A_HALF};
+                mant = IN_MANT_B_HALF - IN_MANT_A_HALF;
                 sign = SIGN_B;
             end
         end
-        else begin 
-            mant = IN_MANT_A_HALF +  IN_MANT_B_HALF;
-            sign = SIGN_A;
+        else begin
+            if (IN_MANT_A_HALF >= IN_MANT_B_HALF) begin
+                mant = IN_MANT_A_HALF - IN_MANT_B_HALF;
+                sign = SIGN_A;
+            end else begin
+                mant = IN_MANT_B_HALF - IN_MANT_A_HALF;
+                sign = SIGN_B;
+            end
         end
     end
 
+    wire [9:0] mant_norm;
+    wire [4:0] exp_norm;
 
     // normalize
-    fp16_normalize norm_mod(
-        .OUT_MANT(Q[9:0]),
-        .OUT_EXP(Q[14:10]),
+    fp_normalize norm_mod #(
+        .MB(13),
+        .EB(5)
+    )(
+        .OUT_MANT(mant_norm),
+        .OUT_EXP(exp_norm),
         .IN_MANT(mant),
         .IN_EXP(IN_EXP_HALF)
     );
 
-
+    // round
+ 
+    assign Q = {sign, exp_norm, mant_norm};
     // flags
-
-
 
 endmodule

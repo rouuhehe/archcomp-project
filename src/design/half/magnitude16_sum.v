@@ -54,22 +54,10 @@ module magnitude16_sum(
     end
     end
 
-*/
-    // --- FLAGS ---
-    always @(*) begin
-    flags = 3'b000;  // default
-    // Inexact if any guard, round, or sticky bits set
-    if (G | R | S)
-        flags[0] = 1'b1;
-    // Overflow if exponent exceeds maximum normal
-    if (final_exp_out > 4'b1110)
-        flags[1] = 1'b1;
-    // Underflow if result denormal + inexact
-    if ((final_exp_out == 4'b0001) && (G | R | S))
-        flags[2] = 1'b1;
-    end
 
     assign Q[7] = sign_a;
     assign Q[6:3] = (denormal != 2'b00) ? final_exp_out : 4'b0000;
     assign Q[2:0] = rounded_mts[2:0];
+
+    */
 endmodule
