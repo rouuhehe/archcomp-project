@@ -11,18 +11,23 @@ module magnitude16_mul(
     );
 
     wire sign = SIGN_A ^ SIGN_B;
-    wire [31:0] mant;
+    wire [21:0] mant;
     wire [4:0] bias = 5'd15;
     wire [5:0] exp = {1'b0, EXP_A} + {1'b0, EXP_B} - {1'b0, bias};
     wire mant = IN_MANT_A_HALF * IN_MANT_B_HALF;
     
     // normalize
-    fp16_normalize normalize_inst (
+    fp_normalize #(
+        .MB(21),
+        .EB(5)
+    ) 
+    normalize_inst (
         .OUT_MANT(mant_norm),
         .OUT_EXP(exp_norm),
         .IN_MANT(mant),
         .IN_EXP(exp)
     );
+
     // round
 
     assign Q = {sign, exp[4:0], mant[9:0]};
