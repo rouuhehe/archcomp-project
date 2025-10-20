@@ -52,6 +52,6 @@ The FPU was successfully demonstrated performing arithmetic operations in both F
 
 ---
 
-## 👥 Authors
-- [Your Name] – Universidad de Ingeniería y Tecnología (UTEC), Peru  
-- [Team Members]
+## Authors
+- Matias Sebastian Walde Verano – Universidad de Ingeniería y Tecnología (UTEC), Peru  
+- Yaritza Milagros Lopez Rojas – Universidad de Ingeniería y Tecnología (UTEC), Peru  
