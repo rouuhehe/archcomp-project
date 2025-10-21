@@ -1,0 +1,50 @@
+## Clock signal
+set_property -dict { PACKAGE_PIN W5 IOSTANDARD LVCMOS33 } [get_ports CLK]
+create_clock -add -name sys_clk_pin -period 10.00 -waveform {0 5} [get_ports CLK]
+
+## Reset button
+set_property -dict { PACKAGE_PIN W2 IOSTANDARD LVCMOS33 } [get_ports RESET_BTN]
+
+## Input data bits from switches SW[7:0]
+set_property -dict { PACKAGE_PIN W13 IOSTANDARD LVCMOS33 } [get_ports {SW[0]}]
+set_property -dict { PACKAGE_PIN W14 IOSTANDARD LVCMOS33 }  [get_ports {SW[1]}]
+set_property -dict { PACKAGE_PIN V15 IOSTANDARD LVCMOS33 }  [get_ports {SW[2]}]
+set_property -dict { PACKAGE_PIN W15 IOSTANDARD LVCMOS33 }  [get_ports {SW[3]}]
+set_property -dict { PACKAGE_PIN W17 IOSTANDARD LVCMOS33 }  [get_ports {SW[4]}]
+set_property -dict { PACKAGE_PIN W16 IOSTANDARD LVCMOS33 }  [get_ports {SW[5]}]
+set_property -dict { PACKAGE_PIN V16 IOSTANDARD LVCMOS33 }  [get_ports {SW[6]}]
+set_property -dict { PACKAGE_PIN V17 IOSTANDARD LVCMOS33 }  [get_ports {SW[7]}]
+set_property -dict { PACKAGE_PIN R2 IOSTANDARD LVCMOS33 }  [get_ports {OP[0]}]
+set_property -dict { PACKAGE_PIN T1 IOSTANDARD LVCMOS33 }  [get_ports {OP[1]}]
+set_property -dict { PACKAGE_PIN U1 IOSTANDARD LVCMOS33 }  [get_ports {MODE_FP}]
+
+## Load control buttons
+set_property -dict { PACKAGE_PIN T18 IOSTANDARD LVCMOS33 }  [get_ports LOAD_A1_BTN]
+set_property -dict { PACKAGE_PIN W19 IOSTANDARD LVCMOS33 }  [get_ports LOAD_A2_BTN]
+set_property -dict { PACKAGE_PIN T17 IOSTANDARD LVCMOS33 }  [get_ports LOAD_B1_BTN]
+set_property -dict { PACKAGE_PIN U17 IOSTANDARD LVCMOS33 }  [get_ports LOAD_B2_BTN]
+
+## Output LEDs LEDS[15:0]
+set_property -dict { PACKAGE_PIN L1 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[0]}]
+set_property -dict { PACKAGE_PIN P1 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[1]}]
+set_property -dict { PACKAGE_PIN N3 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[2]}]
+set_property -dict { PACKAGE_PIN P3 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[3]}]
+set_property -dict { PACKAGE_PIN U3 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[4]}]
+set_property -dict { PACKAGE_PIN W3 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[5]}]
+set_property -dict { PACKAGE_PIN V3 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[6]}]
+set_property -dict { PACKAGE_PIN V13 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[7]}]
+set_property -dict { PACKAGE_PIN V14 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[8]}]
+set_property -dict { PACKAGE_PIN U14 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[9]}]
+set_property -dict { PACKAGE_PIN U15 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[10]}]
+set_property -dict { PACKAGE_PIN W18 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[11]}]
+set_property -dict { PACKAGE_PIN V19 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[12]}]
+set_property -dict { PACKAGE_PIN U19 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[13]}]
+set_property -dict { PACKAGE_PIN E19 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[14]}]
+set_property -dict { PACKAGE_PIN U16 IOSTANDARD LVCMOS33 }  [get_ports {LEDS[15]}]
+
+## General config (keep these as-is)
+set_property CONFIG_VOLTAGE 3.3 [current_design]
+set_property CFGBVS VCCO [current_design]
+set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
+set_property BITSTREAM.CONFIG.CONFIGRATE 33 [current_design]
+set_property CONFIG_MODE SPIx4 [current_design]
